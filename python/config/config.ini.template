@@ -1,0 +1,11 @@
+[Destination DB]
+host=
+user=
+passwd=
+dbName=
+schema=
+charset=utf8
+sessionTimeOut=3600
+
+[Website]
+startURL=
