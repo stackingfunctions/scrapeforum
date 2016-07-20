@@ -5,7 +5,7 @@ from urllib.request import urlopen
 import pymysql
 from bs4 import BeautifulSoup
 
-from python.src import latesttopic
+import latesttopic
 
 
 #############################
