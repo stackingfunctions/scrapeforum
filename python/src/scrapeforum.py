@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 
 import latesttopic
 
-from sqlalchemy import create_engine
-
+from sqlalchemy import create_engine, MetaData
+from sqlalchemy.orm import sessionmaker
 
 #############################
 # Internal helper functions #
@@ -43,7 +43,7 @@ def parseURL(URL):
 
 def initConfig():
     config = configparser.ConfigParser()
-    config.read('../config/config.ini.b')
+    config.read('../config/config.ini')
     return config
 
 
@@ -99,11 +99,17 @@ try:
 
         engine = create_engine("mysql://" + db['user'] + ":" + db['passwd'] + "@" + db['host'] + "/" + db['dbName'] + "?charset=" + db['charset'], echo=True)
         conn = engine.connect()
+        metadata = MetaData() # it is best prectice to share one MetaData object trhough all mapped classes to resolve foreign key references flawlessly - in this case we don't have FK, but le's keep the best practice
+        Session = sessionmaker(bind=engine)
 
         for latestRow in latestRows :
             latestTopic = latesttopic.LatestTopic(latestRow)
-            latestTopic.insert2db(conn)
+            session = Session()
+            session.add(latestTopic)
+            session.commit()
+            #latestTopic.insert2db(conn, metadata)
             #latestTopic.display()
+            print(repr(latestTopic))
 
 finally:
     if cur != None:
@@ -116,3 +122,6 @@ finally:
 
     if pconn != None:
         pconn.close()
+
+    conn.close()
+    engine.dispose()
