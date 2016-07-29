@@ -7,7 +7,7 @@ Base = declarative_base()
 
 class LatestTopic(Base):
 
-    __tablename__ = 'latesttopics'
+    __tablename__ = 'scr_latesttopics'
 
     id = Column(Integer, Sequence('latesttopics_id_seq'), primary_key=True)
     numOfReplies = Column(Integer)
@@ -44,43 +44,3 @@ class LatestTopic(Base):
     def __repr__(self):
         return "<LatestTopic(id='%s', numOfReplies='%s', topicLinkInternal='%s' topicTitle='%s', categoryLinkInternal='%s', categoryTitle='%s', topicCreatedAt='%s', topicCreatedByProfileLinkExternal='%s', topicCreatedByName='%s', numOfVisits='%s')>" % \
                (self.id, self.numOfReplies, self.topicLinkInternal, self.topicTitle, self.categoryLinkInternal, self.categoryTitle, self.topicCreatedAt, self.topicCreatedByProfileLinkExternal, self.topicCreatedByName, self.numOfVisits)
-
-    def display(self):
-        print("\nLatest Topic:\n")
-        print("num of replies: " + self.numOfReplies + "\n")
-        print("topic link internal: " + self.topicLinkInternal + "\n")
-        print("topic title: " + self.topicTitle + "\n")
-        print("category link internal: " + self.categoryLinkInternal + "\n")
-        print("category title: " + self.categoryTitle + "\n")
-        print("topic created at: " + self.topicCreatedAt + "\n")
-        print("topic created by link external: " + self.topicCreatedByProfileLinkExternal + "\n")
-        print("topic created by name: " + self.topicCreatedByName + "\n")
-        print("num of visits: " + self.numOfVisits + "\n")
-
-    def insert2db(self, conn, metadata):
-        latesttopic = Table('latesttopics', metadata,
-                            Column('id', Integer, Sequence('latesttopics_id_seq'), primary_key=True),
-                            Column('numOfReplies', Integer),
-                            Column('topicLinkInternal', String(2000)),
-                            Column('topicTitle', String(255)),
-                            Column('categoryLinkInternal', String(2000)),
-                            Column('categoryTitle', String(255)),
-                            Column('topicCreatedAt', DateTime),
-                            Column('topicCreatedByProfileLinkExternal', String(2000)),
-                            Column('topicCreatedByName', String(255)),
-                            Column('numOfVisits', String(10)))
-
-        # metadata.create_all(engine)
-        setlocale(LC_TIME, ['hu_HU','UTF-8'])
-        ins = latesttopic.insert().values(numOfReplies=self.numOfReplies,
-                                          topicLinkInternal=self.topicLinkInternal,
-                                          topicTitle=self.topicTitle,
-                                          categoryLinkInternal=self.categoryLinkInternal,
-                                          categoryTitle=self.categoryTitle,
-                                          topicCreatedAt=datetime.strptime(self.topicCreatedAt, '%Y %b. %d  %H:%M'),
-                                          topicCreatedByProfileLinkExternal=self.topicCreatedByProfileLinkExternal,
-                                          topicCreatedByName=self.topicCreatedByName,
-                                          numOfVisits=self.numOfVisits)
-        result = conn.execute(ins)
-
-        return result
