@@ -1,4 +1,3 @@
-
 import smtplib
 import constants
 from configurator import Configurator
