@@ -2,6 +2,7 @@ from sqlalchemy import Table, Column, Integer, String, DateTime, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from locale import setlocale, LC_TIME
+from sqlalchemy.sql import func
 
 Base = declarative_base()
 
@@ -19,8 +20,10 @@ class LatestTopic(Base):
     topicCreatedByProfileLinkExternal = Column(String(2000))
     topicCreatedByName = Column(String(255))
     numOfVisits = Column(String(10))
+    scraped_at = Column(DateTime(timezone=True), default=func.now())
+    batch_id = Column(Integer)
 
-    def __init__(self, latestRow):
+    def __init__(self, latestRow, batch_id):
         # set the local for date parsing
         setlocale(LC_TIME, ['hu_HU','UTF-8'])
 
@@ -37,9 +40,8 @@ class LatestTopic(Base):
         topicCreatedBy = topicCreated[1].a
         self.topicCreatedByProfileLinkExternal = topicCreatedBy.attrs['href']
         self.topicCreatedByName = topicCreatedBy.getText()
-
         self.numOfVisits = latestRowTableData[3].findAll("span")[0].getText()
-
+        self.batch_id = batch_id
 
     def __repr__(self):
         return "<LatestTopic(id='%s', numOfReplies='%s', topicLinkInternal='%s' topicTitle='%s', categoryLinkInternal='%s', categoryTitle='%s', topicCreatedAt='%s', topicCreatedByProfileLinkExternal='%s', topicCreatedByName='%s', numOfVisits='%s')>" % \
