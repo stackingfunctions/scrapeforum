@@ -2,10 +2,30 @@
 host=
 user=
 passwd=
+#dbName=
 dbName=
+charset=
 schema=
-charset=utf8
-sessionTimeOut=3600
+# For the 'echo' value only 'True' is evaluated as true everything else is false
+echo=True
 
 [Website]
 startURL=
+
+[Email account]
+server=
+port=
+user=
+passwd=
+
+[Email sender]
+sender_name=
+sender_email=
+
+[Error email receivers]
+receiver_emails=
+receiver_names=
+
+[Notification email receivers]
+receiver_emails=
+receiver_names=
