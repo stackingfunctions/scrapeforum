@@ -13,6 +13,7 @@ class Batch(Base):
     scriptName = Column(String(255))
     scriptStartTime = Column(DateTime(timezone=True), default=func.now())
     scriptEndTime = Column(DateTime(timezone=True))
+    success = Column(Integer, default = 0)
     scrapeErrors = relationship("ScrapeError")
 
 # Child - many
