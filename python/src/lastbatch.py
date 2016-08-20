@@ -20,6 +20,7 @@ class LastBatch(object):
             session = Session()
             # TODO - end
 
+            # TODO add filter for 'success = 1'
             self.batch_id = session.query(func.max(LatestTopic.batch_id).label("max_batch_id")).one().max_batch_id
         except:
             # TODO: report error
