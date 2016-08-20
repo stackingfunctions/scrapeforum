@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, String, DateTime, Sequence
+from sqlalchemy import Column, Integer, String, DateTime, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
 from locale import setlocale, LC_TIME
