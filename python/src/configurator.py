@@ -24,3 +24,6 @@ class Configurator:
 
     def getURL(self):
         return self.config['Website']
+
+    def getDbConnectionString(self):
+        return "mysql://" + self.config['Destination DB']['user'] + ":" + self.config['Destination DB']['passwd'] + "@" + self.config['Destination DB']['host'] + "/" + self.config['Destination DB']['dbName'] + "?charset=" + self.config['Destination DB']['charset']
