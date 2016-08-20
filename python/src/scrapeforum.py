@@ -71,7 +71,7 @@ Mailer(EMAIL_NOTIFICATION).send("Scraping started", "Scraping started for " + UR
 # Connect to database
 try:
     # Set up DB connection
-    connectionString = "mysql://" + db['user'] + ":" + db['passwd'] + "@" + db['host'] + "/" + db['dbName'] + "?charset=" + db['charset']
+    connectionString = config.getDbConnectionString()
     engine = create_engine(connectionString, echo=(db['echo'] == 'True'))
 
     # Create missing tables
