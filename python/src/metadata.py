@@ -22,6 +22,7 @@ class ScrapeError(Base):
     __tablename__ = 'err_scrapeerror'
 
     id = Column(Integer, Sequence('scrapeerror_id_seq'), primary_key=True)
+    errorType = Column(Integer)
     errorString = Column(String(2000))
     errorTime = Column(DateTime(timezone=True), default=func.now())
     batchId = Column(Integer, ForeignKey('meta_batch.id'))
