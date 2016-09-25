@@ -20,10 +20,13 @@ class Configurator:
         return self.config['Email sender']
 
     def getEmailReceivers(self, type):
-        return self.config['Error email receivers'] if type == constants.EMAIL_ERROR else self.config['Notification email receivers']
+        return self.config['Error email receivers'] if type == constants.EMAIL_TYPE_ERROR else self.config['Notification email receivers']
 
     def getURL(self):
         return self.config['Website']
 
     def getDbConnectionString(self):
         return "mysql://" + self.config['Destination DB']['user'] + ":" + self.config['Destination DB']['passwd'] + "@" + self.config['Destination DB']['host'] + "/" + self.config['Destination DB']['dbName'] + "?charset=" + self.config['Destination DB']['charset']
+
+    def getEmailEnabled(self):
+        return True if self.config['Email sending enabled'] == 'True' else False
