@@ -55,6 +55,8 @@ Subject: """ + self.subjectPrefix + subject + """
                 smtpObj.sendmail(self.sender, self.receiver_emails, message2send)
                 # TODO: replace with MyLogger
                 print ("Sent email")
+
+
             except smtplib.SMTPException:
                 session = kwargs.get("session")
                 batch_id = kwargs.get("batch_id")
